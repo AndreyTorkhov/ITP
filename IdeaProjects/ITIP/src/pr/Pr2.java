@@ -1,12 +1,10 @@
 package pr;
 
-import java.util.Arrays;
-import java.util.Random;
+import java.util.Arrays; //java.util - это пакет в стандартной библиотеке Java
+import java.util.Random; //Random - это класс, который предоставляет генератор случайных чисел.
 
 public class Pr2 {
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
         System.out.println(duplicateChars("Donald"));
         System.out.println("_________");
         System.out.println(getInitials("Ryan Gosling"));
@@ -14,7 +12,7 @@ public class Pr2 {
         int[] deo = {44, 32, 86, 19};
         System.out.println(differenceEvenOdd(deo));
         System.out.println("_________");
-        float[] eta = {1,2,3,4,5};
+        float[] eta = {1,2,3,4,5,6};
         System.out.println(equalToAvg(eta));
         System.out.println("_________");
         int[] im = {3,3,-2, 408, 3, 31};
@@ -35,7 +33,7 @@ public class Pr2 {
         str = str.toLowerCase();
         boolean[] mas = new boolean[256];
         for (int i = 0; i < str.length();i++) {
-            int val = str.charAt(i);
+            int val = str.charAt(i); //числовое значение символа
             if (mas[val]) {
                 return true;
             }
@@ -46,7 +44,7 @@ public class Pr2 {
     public static String getInitials(String str){
         String[] names = str.split(" ");
         StringBuilder initials = new StringBuilder();
-        for(String i : names){
+        for(String i : names){ //Запись циклa for-each для перебора элементов коллекции или массива names
             if(!i.isEmpty()){
                 char let = i.charAt(0);
                 initials.append(let);
@@ -64,7 +62,7 @@ public class Pr2 {
                 sumOdd += num;
             }
         }
-        return sumEven - sumOdd;
+        return Math.abs(sumEven - sumOdd);
     }
     public static boolean equalToAvg(float[] nums){
         if (nums.length == 0) {
@@ -105,27 +103,27 @@ public class Pr2 {
     }
     public static int tribonacci(int n){
         int[] mas = new int[n];
+        mas[0]=0;
+        mas[1]=0;
+        mas[2]=1;
         for(int i = 3; i<n;i++){
-            mas[0]=0;
-            mas[1]=0;
-            mas[2]=1;
             mas[i] = mas[i-1] + mas[i-2] + mas[i-3];
         }
         return mas[mas.length-1];
     }
     public static String pseudoHash(int n){
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        Random random = new Random(); //генератор
+        Random random = new Random(); //объект класса рандом
         StringBuilder hash = new StringBuilder();
         for(int i = 0;i<n;i++){
-            int randomIndex = random.nextInt(characters.length()); //сканер
-            char randomChar = characters.charAt(randomIndex);
+            int randomIndex = random.nextInt(characters.length()); //случайный индекс
+            char randomChar = characters.charAt(randomIndex); //символ с случайным индексом
             hash.append(randomChar);
         }
         return hash.toString();
     }
     public static String botHelper(String str){
-        str = str.replaceAll(",", " ").toLowerCase();
+        str = str.replaceAll("\\.", "").replaceAll(", ", " ").toLowerCase();
         String[] words = str.split(" ");
         String word = "help";
         for(int i = 0; i<words.length;i++){
@@ -136,12 +134,11 @@ public class Pr2 {
         return "Keep waiting";
     }
     public static boolean isAnagram(String str1, String str2){
-        str1 = str1.toLowerCase().replace(" ", "");
-        str2 = str2.toLowerCase().replace(" ", "");
+        str1 = str1.toLowerCase().replaceAll(" ", "");
+        str2 = str2.toLowerCase().replaceAll(" ", "");
         if(str1.length()!=str2.length()){
             return false;
         }
-
         char[] s1Char = str1.toCharArray();
         char[] s2Char = str2.toCharArray();
         Arrays.sort(s2Char);
