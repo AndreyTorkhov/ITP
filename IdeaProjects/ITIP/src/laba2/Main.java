@@ -12,6 +12,7 @@ abstract class Weapon {
     }
 
     public abstract void attack();
+    public abstract void afterAttack();
 
     public String getName() {
         return name;
@@ -44,9 +45,13 @@ class Sword extends Weapon {
         super(name, damage, durability);
         swordCount++;
     }
-
+    @Override
     public void attack() {
         System.out.println(getName() + " with " + getDamage() + " damage and " + getDurability() + "% durability!");
+    }
+    @Override
+    public void afterAttack(){
+        System.out.println("new durability" + (getDurability() - 10));
     }
 
     public static int swordCount(){
@@ -58,8 +63,14 @@ class Bow extends Weapon {
     public Bow(String name, int damage, int durability) {
         super(name, damage, durability);
     }
+
+    @Override
     public void attack() {
         System.out.println(getName() + " with arrows with " + getDamage() + " damage and " + getDurability() + "% durability!");
+    }
+    @Override
+    public void afterAttack(){
+        System.out.println("new durability" + (getDurability() - 10));
     }
 }
 
@@ -68,6 +79,23 @@ class Wand extends Weapon {
         super(name, damage, durability);
     }
 
+    @Override
+    public void attack() {
+        System.out.println(getName() + " with " + getDamage() + " power and " + getDurability() + "% durability!");
+    }
+
+    @Override
+    public void afterAttack(){
+        System.out.println("new durability" + (getDurability() - 10));
+    }
+}
+
+ class SuperSword extends Sword {
+    public SuperSword(String name, int damage, int durability) {
+        super(name, damage, durability);
+    }
+
+    @Override
     public void attack() {
         System.out.println(getName() + " with " + getDamage() + " power and " + getDurability() + "% durability!");
     }
@@ -75,6 +103,9 @@ class Wand extends Weapon {
 
 public class Main {
     public static void main(String[] args) {
+        SuperSword superSword = new SuperSword("Super", 100, 100);
+        superSword.attack();
+        //
         System.out.println("____________________");
         Sword sword = new Sword("Sword", 10, 100);
         sword.setName("Excalibur");
@@ -90,6 +121,7 @@ public class Main {
         Bow bow = new Bow("Golden Bow", 8, 80);
         bow.setDamage(20);
         bow.attack();
+        bow.afterAttack();
         System.out.println("____________________");
 
         Wand wand = new Wand("Magic Wand", 15, 50);

@@ -4,18 +4,18 @@ import java.util.Arrays;
 
 public class Pr3 {
     public static void main(String[] args) {
-        System.out.println("_________");
+        System.out.println("_________1");
         System.out.println(replaceVovels("Even if you did this task not by yourself, you have to understand every single line of code."));
-        System.out.println("_________");
+        System.out.println("_________2");
         System.out.println(stringTransform("Hello"));
-        System.out.println("_________");
-        System.out.println(doesBlockFit(1,2,2,1,1));
-        System.out.println("_________");
+        System.out.println("_________3");
+        System.out.println(doesBlockFit(1,3,5,4,5));
+        System.out.println("_________4");
         System.out.println(numCheck(243));
-        System.out.println("_________");
+        System.out.println("_________5");
         int[] root = {1, -3, 2};
         System.out.println(countRoots(root));
-        System.out.println("_________");
+        System.out.println("_________6");
         String[][] sales = {
                 {"Apple", "Shop1", "Shop2", "Shop3", "Shop4"},
                 {"Banana", "Shop2", "Shop3", "Shop4"},
@@ -23,19 +23,21 @@ public class Pr3 {
                 {"Pear", "Shop2", "Shop4"}
         };
         System.out.println(Arrays.toString(salesData(sales)));
-        System.out.println("_________");
+        System.out.println("_________7");
         System.out.println(validSplit("apple eagle egg goat"));
-        System.out.println("_________");
+        System.out.println("_________8");
         int[] wave = {1, 2, -6, 10, 3};
         System.out.println(waveForm(wave));
-        System.out.println("_________");
+        System.out.println("_________9");
         System.out.println(commonVovel("Actions speak louder than words"));
-        System.out.println("_________");
-        int[][] arrays = {{6, 4, 19, 0, 0},
-                {81, 25, 3, 1, 17},
-                {48, 12, 60, 32, 14},
-                {91, 47, 16, 65, 217},
-                {5, 73, 0, 4, 21}};
+        System.out.println("_________10");
+        int[][] arrays = {
+                {1, 2, 3, 4, 5},
+                {6, 7, 8, 9, 10},
+                {5, 5, 5, 5, 5},
+                {7, 4, 3, 14, 2},
+                {1, 0, 11, 10, 1}
+        };
 
         dataScience(arrays);
 
@@ -54,7 +56,7 @@ public class Pr3 {
     }
 
     public static String stringTransform(String str){
-        String letters = "BCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        String letters ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         for(int i = 0;i<letters.length()-1;i++){
             String change = "";
             change += letters.charAt(i);
@@ -67,8 +69,13 @@ public class Pr3 {
     }
 
     public static boolean doesBlockFit(int a, int b, int c, int w, int h){
-        if ((a<=w && b<=h) || (b<=w && a<=h) || (a<=w && c<=h) || (c<=w && a<=h) || (b<=w && c<=h) || (c<=w && b<=h)){
-            return true;
+        int[] in = {a, b, c};
+        int[] out = {w, h};
+        Arrays.sort(in);
+        Arrays.sort(out);
+        if (in[0] <= out[0])
+        {
+            return in[1] <= out[1];
         }
         return false;
     }
@@ -89,20 +96,30 @@ public class Pr3 {
     }
 
     public static int countRoots(int[] nums){
-        if (nums.length != 3) {
-            return -1;
-        }
-        int a = nums[0];
-        int b = nums[1];
-        int c = nums[2];
-        int discriminant = b * b - 4 * a * c;
-        if (discriminant < 0) {
+        int dis = nums[1] * nums[1] - 4 * nums[0] * nums[2];
+        if (dis < 0) {
             return 0;
-        } else if (discriminant == 0) {
-            return 1;
-        } else {
-            return 2;
+        } else if (dis == 0) {
+            if((nums[1] % (nums[0] * 2)) == 0) {
+                return 1;
+            }
+            return 0;
         }
+        else {
+            int answer = 0;
+            for(int i = 1; i * i <= dis; i++) {
+                if (i * i == dis) {
+                    if (((nums[1] + i) % (nums[0] * 2)) == 0) {
+                        answer++;
+                    }
+                    if (((nums[1] - i) % (nums[0] * 2)) == 0) {
+                        answer++;
+                    }
+                }
+            }
+            return answer;
+        }
+
     }
 
     public static String[] salesData(String [][] sales){
@@ -128,24 +145,15 @@ public class Pr3 {
         str = str.toLowerCase().replaceAll(",", "");
         String[] words = str.split(" ");
 
-        if (words.length <= 1) {
-            return false; // В предложении должно быть больше одного слова
-        }
-
         for (int i = 1; i < words.length; i++) {
             String currentWord = words[i];
             String previousWord = words[i - 1];
             int currentWordLength = currentWord.length();
             int previousWordLength = previousWord.length();
-
-            if (currentWordLength == 0 || previousWordLength == 0) {
-                return false; // Ни одно слово не должно быть пустым
-            }
-
             char lastCharOfPreviousWord = previousWord.charAt(previousWordLength - 1);
             char firstCharOfCurrentWord = currentWord.charAt(0);
 
-            if (Character.toLowerCase(lastCharOfPreviousWord) != Character.toLowerCase(firstCharOfCurrentWord)) {
+            if (lastCharOfPreviousWord != firstCharOfCurrentWord) {
                 return false;
             }
         }
@@ -153,35 +161,21 @@ public class Pr3 {
         return true;
     }
 
-    public static boolean waveForm(int[] arr) { // не сошлось с ответом
-        if (arr.length < 3) {
-            return false;
-        }
-        int prev = arr[0];
-        for (int i = 1; i < arr.length; i++) {
-            int curr = arr[i];
-            if ((curr - prev) > 0 && (i + 1 < arr.length)) {
-                int next = arr[i + 1];
-                if ((next - curr) < (curr - prev)) {
-                    return false;
-                }
-            } else if ((curr - prev) < 0 && (i > 0)) {
-                int prevPrev = arr[i - 1];
-                if ((prev - prevPrev) > (curr - prev)) {
-                    return false;
-                }
+    public static boolean waveForm(int[] arr) {
+        for(int i=1; i<arr.length - 1; i++) {
+            if(!(arr[i] < arr[i-1] && arr[i] < arr[i+1] || arr[i] > arr[i-1] && arr[i] > arr[i+1])) {
+                return false;
             }
-            prev = curr;
         }
         return true;
     }
 
     public static char commonVovel(String str) {
-        String lowercaseSentence = str.toLowerCase();
+        str = str.toLowerCase();
         char[] vowels = {'a', 'e', 'i', 'o', 'u'};
         int[] vowelCounts = new int[5];
-        for (int i = 0; i < lowercaseSentence.length(); i++) {
-            char letter = lowercaseSentence.charAt(i);
+        for (int i = 0; i < str.length(); i++) {
+            char letter = str.charAt(i);
             if (letter == 'a' || letter == 'e' || letter == 'i' || letter == 'o' || letter == 'u') {
                 int index = letter == 'a' ? 0 : letter == 'e' ? 1 : letter == 'i' ? 2 : letter == 'o' ? 3 : 4;
                 vowelCounts[index]++;
@@ -196,12 +190,12 @@ public class Pr3 {
         return vowels[maxCountIndex];
     }
 
-    public static void dataScience(int[][] arrays) { // не пон
+    public static void dataScience(int[][] arrays) {
         int n = arrays.length;
 
         for (int i = 0; i < n; i++) {
-            int sum = 0;
-            int count = 0;
+            float sum = 0;
+            float count = 0;
 
             for (int j = 0; j < n; j++) {
                 if (j != i) {
@@ -210,9 +204,13 @@ public class Pr3 {
                 }
             }
 
-            int average = sum / count;
-            arrays[i][n - 1] = average;
+            float average = sum/count;
+            int num = Math.round(average);
+            for(int j = 0; j < n; j++){
+                if(i == j){
+                    arrays[i][j] = num;
+                }
+            }
         }
     }
-
 }
