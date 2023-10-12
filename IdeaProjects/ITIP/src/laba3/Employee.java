@@ -21,7 +21,19 @@ public class Employee {
     public String getName() {
         return name;
     }
-    // Геттеры и сеттеры для полей
+
+    public String getPosition() {
+        return position;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void info() {
+        System.out.println(getName() + " имеет должность " + getPosition() + " и зарабатывает " + getSalary());
+    }
+
 }
 
 
@@ -49,21 +61,25 @@ class MainEmployee {
     public static void main(String[] args) {
         EmployeeDatabase database = new EmployeeDatabase();
 
-        // Добавление сотрудников
         Employee employee1 = new Employee(1, "John Doe", "Manager", 50000);
         Employee employee2 = new Employee(2, "Jane Smith", "Developer", 60000);
         database.addEmployee(employee1);
         database.addEmployee(employee2);
+        employee2.info();
 
-        // Поиск сотрудника по ID
-        Employee foundEmployee = database.findEmployee(1);
-        if (foundEmployee != null) {
-            System.out.println("Employee found: " + foundEmployee.getName());
+        Employee foundEmployee1 = database.findEmployee(1);
+        if (foundEmployee1 != null) {
+            System.out.println("Employee found: " + foundEmployee1.getName());
         } else {
             System.out.println("Employee not found.");
         }
 
-        // Удаление сотрудника
         database.removeEmployee(1);
+        Employee foundEmployee2 = database.findEmployee(1);
+        if (foundEmployee2 != null) {
+            System.out.println("Employee found: " + foundEmployee2.getName());
+        } else {
+            System.out.println("Employee not found.");
+        }
     }
 }
