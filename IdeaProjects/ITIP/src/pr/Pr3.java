@@ -176,9 +176,10 @@ public class Pr3 {
         int[] vowelCounts = new int[5];
         for (int i = 0; i < str.length(); i++) {
             char letter = str.charAt(i);
-            if (letter == 'a' || letter == 'e' || letter == 'i' || letter == 'o' || letter == 'u') {
-                int index = letter == 'a' ? 0 : letter == 'e' ? 1 : letter == 'i' ? 2 : letter == 'o' ? 3 : 4;
-                vowelCounts[index]++;
+            for(int j =0; j < vowels.length; j++){
+                if(vowels[j]==letter){
+                    vowelCounts[j]++;
+                }
             }
         }
         int maxCountIndex = 0;
