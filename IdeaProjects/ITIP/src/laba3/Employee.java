@@ -1,6 +1,7 @@
 package laba3;
 
-import java.util.HashMap;
+import java.util.Hashtable;
+
 public class Employee {
     private int id;
     private String name;
@@ -33,15 +34,13 @@ public class Employee {
     public void info() {
         System.out.println(getName() + " имеет должность " + getPosition() + " и зарабатывает " + getSalary());
     }
-
 }
 
-
 class EmployeeDatabase {
-    private HashMap<Integer, Employee> employees;
+    private Hashtable<Integer, Employee> employees;
 
     public EmployeeDatabase() {
-        employees = new HashMap<>();
+        employees = new Hashtable<>();
     }
 
     public void addEmployee(Employee employee) {

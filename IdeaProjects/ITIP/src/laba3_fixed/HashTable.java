@@ -1,5 +1,6 @@
-package laba3;
+package laba3_fixed;
 
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 public class HashTable<K, V> {
@@ -88,20 +89,72 @@ public class HashTable<K, V> {
         int hashCode = key.hashCode();
         return Math.abs(hashCode) % table.length;
     }
-}
+    public static class Employee {
+        private int id;
+        private String name;
+        private String position;
+        private double salary;
+
+        public Employee(int id, String name, String position, double salary) {
+            this.id = id;
+            this.name = name;
+            this.position = position;
+            this.salary = salary;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getPosition() {
+            return position;
+        }
+
+        public double getSalary() {
+            return salary;
+        }
 
 
+        public void info() {
+            System.out.println(getName() + " имеет должность " + getPosition() + " и зарабатывает " + getSalary());
+        }
+    }
 
-class MainHashTable {
+    public static class EmployeeDatabase {
+        private Hashtable<Integer, Employee> employees;
+
+        public EmployeeDatabase(int capacity) {
+            employees = new Hashtable<>();
+        }
+
+        public void addEmployee(Employee employee) {
+            employees.put(employee.getId(), employee);
+        }
+
+        public Employee findEmployee(int id) {
+            return employees.get(id);
+        }
+
+        public void removeEmployee(int id) {
+            employees.remove(id);
+        }
+    }
+
     public static void main(String[] args) {
-        HashTable<String, Integer> table = new HashTable<>();
+        HashTable.EmployeeDatabase database = new HashTable.EmployeeDatabase(10);
 
-        // Пример использования методов
-        table.put("one", 1);
-        table.put("two", 2);
-        System.out.println("Value for key 'one': " + table.get("one"));
-        table.remove("two");
-        System.out.println("Is the table empty? " + table.isEmpty());
-        System.out.println("Size of the table: " + table.size());
+        HashTable.Employee employee1 = new HashTable.Employee(1, "John Doe", "Manager", 50000);
+        HashTable.Employee employee2 = new HashTable.Employee(2, "Jane Smith", "Developer", 60000);
+        database.addEmployee(employee1);
+        database.addEmployee(employee2);
+        employee2.info();
+
+        database.removeEmployee(1);
+        System.out.println("Employee found: " + database.findEmployee(1));
+
     }
 }

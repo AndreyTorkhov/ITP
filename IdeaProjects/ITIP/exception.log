@@ -1,0 +1,5 @@
+laba4.CustomNumberFormatException: Failed to parse integer from string: abc
+laba4.CustomNumberFormatException: Failed to parse integer from string: 123a
+laba4.CustomNumberFormatException: Failed to parse integer from string: 123.9765
+laba4.CustomNumberFormatException: Failed to parse integer from string: 123ф
+laba4.CustomNumberFormatException: Failed to parse integer from string: true
